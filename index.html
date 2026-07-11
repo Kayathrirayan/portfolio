@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kayathri K. Subrayan — Portfolio</title>
+<meta name="description" content="Portfolio of Kayathri K. Subrayan, Computer Science (Data Science) student at Multimedia University.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1b1b2f;
+    --muted:#6b6b83;
+    --line:#ece9ff;
+    --bg:#fbfaff;
+    --card:#ffffff;
+    --accent:#6c4ce6;
+    --accent2:#ff6b8b;
+    --accent3:#00c9a7;
+    --accent4:#ffb648;
+    --accent-light:#f1ecff;
+    --maxw:900px;
+    --grad: linear-gradient(120deg, var(--accent), var(--accent2) 50%, var(--accent4));
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  ::selection{background:var(--accent); color:#fff;}
+  body{
+    margin:0;
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.6;
+    overflow-x:hidden;
+    position:relative;
+  }
+  h1,h2,h3,.brand,.project-title,.exp-title,.edu-title{font-family:'Poppins',sans-serif;}
+  a{color:var(--accent);text-decoration:none; transition:color .2s ease;}
+  a:hover{text-decoration:none; color:var(--accent2);}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px; position:relative; z-index:2;}
+
+  /* Cursor spotlight */
+  #spotlight{
+    position:fixed; inset:0; pointer-events:none; z-index:1;
+    background:radial-gradient(600px circle at var(--x,50%) var(--y,20%), rgba(108,76,230,0.10), transparent 60%);
+    transition:background .05s linear;
+  }
+
+  /* Floating blobs background */
+  .blob{
+    position:fixed; border-radius:50%; filter:blur(70px); opacity:0.35; z-index:0; pointer-events:none;
+    animation:float 16s ease-in-out infinite;
+  }
+  .blob1{width:380px;height:380px; background:var(--accent); top:-120px; left:-100px; animation-delay:0s;}
+  .blob2{width:320px;height:320px; background:var(--accent2); top:300px; right:-140px; animation-delay:3s;}
+  .blob3{width:300px;height:300px; background:var(--accent3); bottom:-100px; left:20%; animation-delay:6s;}
+  .blob4{width:260px;height:260px; background:var(--accent4); bottom:200px; right:15%; animation-delay:9s;}
+  @keyframes float{
+    0%,100%{transform:translate(0,0) scale(1);}
+    33%{transform:translate(30px,-40px) scale(1.08);}
+    66%{transform:translate(-25px,25px) scale(0.95);}
+  }
+
+  /* Nav */
+  nav{
+    position:sticky;top:0;z-index:20;
+    background:rgba(251,250,255,0.75);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{display:flex;justify-content:space-between;align-items:center;padding:14px 24px;}
+  nav .brand{font-weight:700;font-size:16px;letter-spacing:0.01em;
+    background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent;
+    background-size:200% auto; animation:shine 6s linear infinite;
+  }
+  @keyframes shine{ to{ background-position:200% center; } }
+  nav ul{list-style:none;display:flex;gap:24px;margin:0;padding:0;}
+  nav ul li{position:relative;}
+  nav ul li a{color:var(--ink);font-size:14px;font-weight:600; padding-bottom:4px; position:relative;}
+  nav ul li a::after{
+    content:''; position:absolute; left:0; bottom:-2px; width:0%; height:2px;
+    background:var(--grad); transition:width .25s ease;
+  }
+  nav ul li a:hover{color:var(--accent);}
+  nav ul li a:hover::after{width:100%;}
+
+  /* Header / hero */
+  header.hero{padding:72px 0 56px;border-bottom:1px solid var(--line); position:relative;}
+  .hero-inner{display:flex;align-items:center;gap:30px;flex-wrap:wrap;}
+  .avatar{
+    width:100px;height:100px;border-radius:50%;
+    background:var(--grad); background-size:200% auto;
+    color:#fff; padding:4px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:34px;font-weight:700;letter-spacing:0.02em;
+    flex-shrink:0; box-shadow:0 10px 30px -8px rgba(108,76,230,0.55);
+    animation:shine 5s linear infinite;
+    transition:transform .3s ease;
+  }
+  .avatar:hover{transform:scale(1.08) rotate(-4deg);}
+  .avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;}
+  .hero-text h1{margin:0 0 4px;font-size:32px;font-weight:800; letter-spacing:-0.01em;}
+  .hero-text .role{
+    font-weight:600;font-size:16px;margin-bottom:12px;
+    background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent;
+    background-size:200% auto; animation:shine 6s linear infinite; display:inline-block;
+  }
+  .hero-text p.summary{max-width:640px;color:var(--muted);margin:0 0 16px;font-size:15.5px;}
+  .contact-row{display:flex;flex-wrap:wrap;gap:12px;font-size:14px;color:var(--muted);}
+  .contact-row span{display:flex;align-items:center;gap:6px; background:var(--card); border:1px solid var(--line); padding:6px 12px; border-radius:20px; transition:transform .2s ease, box-shadow .2s ease;}
+  .contact-row span:hover{transform:translateY(-2px); box-shadow:0 8px 20px -8px rgba(108,76,230,0.4); border-color:var(--accent);}
+  .badge{
+    display:inline-block;margin-top:14px;
+    background:var(--grad); color:#fff;
+    padding:7px 16px;border-radius:20px;font-size:13px;font-weight:700;
+    box-shadow:0 8px 22px -8px rgba(108,76,230,0.55);
+    animation:pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse{ 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.035);} }
+
+  /* Sections */
+  section{padding:52px 0;border-bottom:1px solid var(--line); position:relative;}
+  section:last-of-type{border-bottom:none;}
+  h2.sectitle{
+    font-size:13px;text-transform:uppercase;letter-spacing:0.12em;
+    color:var(--accent);font-weight:700;margin:0 0 26px; position:relative; display:inline-block;
+  }
+  h2.sectitle::after{
+    content:''; position:absolute; left:0; bottom:-8px; width:36px; height:3px; border-radius:3px;
+    background:var(--grad);
+  }
+
+  /* Reveal on scroll */
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  /* Pop-in on scroll (springy) */
+  .pop{
+    opacity:0; transform:translateY(46px) scale(0.82);
+    transition:opacity .55s cubic-bezier(.34,1.56,.64,1), transform .55s cubic-bezier(.34,1.56,.64,1);
+  }
+  .pop.in{ opacity:1; transform:translateY(0) scale(1); }
+  .edu-item.pop:nth-of-type(2){ transition-delay:.1s; }
+  .project-card.pop:nth-of-type(2){ transition-delay:.12s; }
+  .exp-item.pop:nth-of-type(2){ transition-delay:.12s; }
+  .cert-card.pop:nth-of-type(2){ transition-delay:.12s; }
+  .skill-group.pop:nth-of-type(2){ transition-delay:.08s; }
+  .skill-group.pop:nth-of-type(3){ transition-delay:.16s; }
+  .skill-group.pop:nth-of-type(4){ transition-delay:.24s; }
+  .skill-group.pop:nth-of-type(5){ transition-delay:.32s; }
+  .skill-group.pop:nth-of-type(6){ transition-delay:.4s; }
+
+  /* Decorative themed icons */
+  .deco-icon{
+    position:absolute; top:14px; right:14px; font-size:20px; line-height:1;
+    background:#fff; border:1px solid var(--line); border-radius:50%;
+    width:38px; height:38px; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 8px 18px -8px rgba(108,76,230,0.4);
+    animation:bob 3s ease-in-out infinite;
+    transition:transform .3s ease;
+    z-index:2;
+  }
+  .exp-item{ position:relative; }
+  .exp-item:hover .deco-icon, .project-card:hover .deco-icon{ transform:scale(1.18) rotate(-10deg); }
+  @keyframes bob{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-6px);} }
+
+  /* Education */
+  .edu-item{margin-bottom:22px; padding-left:18px; border-left:3px solid var(--line); transition:border-color .25s ease;}
+  .edu-item:hover{ border-left-color:var(--accent);}
+  .edu-item:last-child{margin-bottom:0;}
+  .edu-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:4px;}
+  .edu-title{font-weight:700;font-size:16px;}
+  .edu-date{color:var(--muted);font-size:13.5px;white-space:nowrap; background:var(--accent-light); padding:2px 10px; border-radius:12px;}
+  .edu-sub{color:var(--muted);font-size:14px;margin-bottom:6px;}
+  .edu-desc{font-size:14.5px;color:#3a3a3a;}
+
+  /* Projects */
+  .project-card{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:24px 26px;margin-bottom:20px;
+    transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    transform-style:preserve-3d; will-change:transform;
+    position:relative; overflow:hidden;
+  }
+  .project-card::before{
+    content:''; position:absolute; inset:0; padding:1px; border-radius:14px;
+    background:var(--grad); opacity:0; transition:opacity .3s ease;
+    -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none;
+  }
+  .project-card:hover{ box-shadow:0 22px 45px -20px rgba(108,76,230,0.45); border-color:transparent;}
+  .project-card:hover::before{ opacity:1; }
+  .project-card:last-child{margin-bottom:0;}
+  .project-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:6px;}
+  .project-title{font-weight:700;font-size:17px;}
+  .project-date{color:var(--muted);font-size:13px;white-space:nowrap;}
+  .project-status{
+    display:inline-block;font-size:11.5px;font-weight:700;
+    color:#fff;background:var(--accent3);
+    padding:2px 10px;border-radius:12px;margin-left:8px;vertical-align:middle;
+  }
+  .project-card ul{margin:10px 0 12px;padding-left:20px;font-size:14.5px;color:#3a3a3a;}
+  .project-card li{margin-bottom:5px;}
+  .tech-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px;}
+  .tech-tag{
+    background:var(--accent-light);border:1px solid var(--line);
+    font-size:12px;color:var(--accent);padding:4px 12px;border-radius:14px; font-weight:600;
+    transition:transform .18s ease, background .18s ease, color .18s ease;
+  }
+  .tech-tag:hover{ transform:translateY(-3px) scale(1.05); background:var(--grad); color:#fff; }
+
+  /* Experience */
+  .exp-item{margin-bottom:22px; padding:18px 20px; border-radius:12px; transition:background .25s ease, transform .25s ease;}
+  .exp-item:hover{ background:var(--accent-light); transform:translateX(4px); }
+  .exp-item:last-child{margin-bottom:0;}
+  .exp-title{font-weight:700;font-size:16px;}
+  .exp-org{color:var(--accent);font-weight:600;font-size:14px;margin-bottom:6px;}
+  .exp-item ul{margin:6px 0 0;padding-left:20px;font-size:14.5px;color:#3a3a3a;}
+  .exp-item li{margin-bottom:4px;}
+
+  /* Skills */
+  .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:24px;}
+  .skill-group h3{font-size:14px;margin:0 0 10px;font-weight:700; color:var(--accent);}
+  .skill-group ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:7px;}
+  .skill-group li{
+    background:var(--card);border:1px solid var(--line);
+    font-size:13px;padding:5px 12px;border-radius:14px;color:#3a3a3a; font-weight:500;
+    transition:transform .18s ease, box-shadow .18s ease, background .18s ease, color .18s ease;
+    cursor:default;
+  }
+  .skill-group li:hover{
+    transform:translateY(-3px) scale(1.06);
+    background:var(--grad); color:#fff; border-color:transparent;
+    box-shadow:0 10px 20px -10px rgba(108,76,230,0.5);
+  }
+
+  /* Certificates */
+  .cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;}
+  .cert-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px; transition:transform .25s ease, box-shadow .25s ease;}
+  .cert-card:hover{ transform:translateY(-6px); box-shadow:0 20px 40px -20px rgba(108,76,230,0.4);}
+  .cert-card h3{font-size:14.5px;margin:0 0 6px; color:var(--accent);}
+  .cert-card p{font-size:13.5px;color:var(--muted);margin:0;}
+
+  /* Footer / contact */
+  footer{padding:56px 0 64px;text-align:center;}
+  footer h2.sectitle{text-align:center; margin-left:auto; margin-right:auto;}
+  footer h2.sectitle::after{ left:50%; transform:translateX(-50%); }
+  footer p{color:var(--muted);font-size:14.5px;max-width:480px;margin:0 auto 20px;}
+  .footer-links{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;}
+  .footer-links a{
+    border:1px solid var(--line);padding:10px 20px;border-radius:24px;
+    font-size:14px;font-weight:700;color:var(--ink);
+    transition:transform .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .footer-links a:hover{
+    background:var(--grad); border-color:transparent; color:#fff;
+    transform:translateY(-4px); box-shadow:0 14px 26px -12px rgba(108,76,230,0.55);
+  }
+  .copyright{margin-top:36px;font-size:12.5px;color:#a3a3a3;}
+
+  @media (max-width:600px){
+    .hero-inner{flex-direction:column;align-items:flex-start;}
+    nav ul{gap:14px;}
+    nav ul li a{font-size:13px;}
+    .blob{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div id="spotlight"></div>
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+<div class="blob blob3"></div>
+<div class="blob blob4"></div>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">Kayathri K. Subrayan</div>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="about">
+  <div class="wrap hero-inner">
+    <div class="avatar"><img src="profile.jpg" alt="Kayathri K. Subrayan" onerror="this.style.display='none'; this.parentElement.textContent='KS';"></div>
+    <div class="hero-text">
+      <h1>Kayathri K. Subrayan</h1>
+      <div class="role">Computer Science (Data Science) Student</div>
+      <p class="summary">
+        Computer Science (Data Science) student at Multimedia University (CGPA 3.34/4.00), skilled in Python, SQL,
+        Power BI, data analysis, machine learning, and data visualization through academic projects and coursework.
+        Experienced in building machine learning models, interactive dashboards, and multilingual NLP solutions.
+        Seeking a Data Science internship to apply analytical and technical skills in industry.
+      </p>
+      <div class="contact-row">
+        <span>📍 Selangor, Malaysia</span>
+        <span>✉️ <a href="mailto:rayankayathri1m@gmail.com">rayankayathri1m@gmail.com</a></span>
+        <span>🔗 <a href="https://linkedin.com/in/kayathri-k-subrayan-495709297" target="_blank" rel="noopener">LinkedIn</a></span>
+      </div>
+      <div class="badge">Available for internship: 26 Jul 2026 – 18 Oct 2026</div>
+    </div>
+  </div>
+</header>
+
+<section id="education">
+  <div class="wrap reveal">
+    <h2 class="sectitle">Education</h2>
+
+    <div class="edu-item pop">
+      <div class="edu-top">
+        <div class="edu-title">Bachelor of Computer Science (Data Science)</div>
+        <div class="edu-date">03/2024 – 06/2027</div>
+      </div>
+      <div class="edu-sub">Multimedia University (MMU), Cyberjaya, Malaysia · CGPA: 3.34 / 4.00</div>
+      <div class="edu-desc">
+        Specializing in Data Science with coursework and projects in data analysis, machine learning,
+        computational methods, networking, and operating systems. Actively involved in student leadership
+        and event management through university club activities.
+      </div>
+    </div>
+
+    <div class="edu-item pop">
+      <div class="edu-top">
+        <div class="edu-title">Foundation in Information Technology</div>
+        <div class="edu-date">08/2022 – 07/2023</div>
+      </div>
+      <div class="edu-sub">Multimedia University (MMU), Cyberjaya, Malaysia</div>
+      <div class="edu-desc">
+        Completed foundation studies with exposure to basic programming, mathematics, and IT concepts,
+        preparing for further studies in Computer Science and Data Science.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap reveal">
+    <h2 class="sectitle">Projects</h2>
+
+    <div class="project-card tilt pop">
+      <span class="deco-icon" aria-hidden="true">💻</span>
+      <div class="project-top">
+        <div class="project-title">AI-Driven Multilingual Social Media Analysis for Human Behaviour and Trends
+          <span class="project-status">Ongoing</span>
+        </div>
+        <div class="project-date">Oct 2025 – Present</div>
+      </div>
+      <div class="edu-sub">Final Year Project</div>
+      <ul>
+        <li>Designing a multilingual emotion detection framework for English, Tamil, and Malay social media text.</li>
+        <li>Exploring transformer-based models including BERT, mBERT, and XLM-R for multilingual emotion classification.</li>
+        <li>Conducting research on data collection, preprocessing, and annotation techniques for social media datasets.</li>
+        <li>Investigating behavioural trends and sentiment patterns from multilingual online content.</li>
+        <li>Applying Python and NLP concepts throughout the project development process.</li>
+      </ul>
+      <div class="tech-tags">
+        <span class="tech-tag">Python</span>
+        <span class="tech-tag">BERT</span>
+        <span class="tech-tag">mBERT</span>
+        <span class="tech-tag">XLM-R</span>
+        <span class="tech-tag">NLP</span>
+      </div>
+    </div>
+
+    <div class="project-card tilt pop">
+      <span class="deco-icon" aria-hidden="true">💻</span>
+      <div class="project-top">
+        <div class="project-title">Online Shoppers Purchasing Intention Analysis Dashboard</div>
+        <div class="project-date">Oct 2025 – Jan 2026</div>
+      </div>
+      <div class="edu-sub">Data Mining &amp; Dashboard Visualization Project</div>
+      <ul>
+        <li>Collaborated in a data mining and dashboard visualization project analyzing online shopper purchasing intention data.</li>
+        <li>Performed data cleaning, preprocessing, and exploratory data analysis using Python and Pandas.</li>
+        <li>Developed an interactive dashboard using Streamlit to visualize customer behaviour patterns and purchasing trends.</li>
+        <li>Generated insights through data visualization to support data-driven decision making.</li>
+      </ul>
+      <div class="tech-tags">
+        <span class="tech-tag">Python</span>
+        <span class="tech-tag">Pandas</span>
+        <span class="tech-tag">Streamlit</span>
+        <span class="tech-tag">Data Analysis</span>
+        <span class="tech-tag">Data Visualization</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap reveal">
+    <h2 class="sectitle">Experience</h2>
+
+    <div class="exp-item pop">
+      <span class="deco-icon" aria-hidden="true">📷</span>
+      <div class="exp-title">Freelance Photography Assistant</div>
+      <div class="exp-org">Freelance</div>
+      <ul>
+        <li>Assisted in organizing and coordinating photography sessions and event shoots.</li>
+        <li>Communicated with clients to understand requirements and ensure smooth execution of photography projects.</li>
+        <li>Supported scheduling, equipment preparation, and event logistics during shoots.</li>
+        <li>Developed teamwork, communication, time management, and problem-solving skills in fast-paced environments.</li>
+      </ul>
+    </div>
+
+    <div class="exp-item pop">
+      <span class="deco-icon" aria-hidden="true">🎳</span>
+      <div class="exp-title">Leadership Experience — Bowling Tournament</div>
+      <div class="exp-org">MMU Orbeex Bowling Club</div>
+      <ul>
+        <li>Led the planning and execution of a university bowling tournament involving club members and participants.</li>
+        <li>Coordinated event logistics, scheduling, transportation arrangements, and participant management.</li>
+        <li>Collaborated with committee members to ensure smooth event operations and successful delivery.</li>
+        <li>Developed leadership, communication, teamwork, and project management skills.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap reveal">
+    <h2 class="sectitle">Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-group pop">
+        <h3>Programming</h3>
+        <ul><li>Python</li><li>Java</li><li>C++</li><li>SQL</li></ul>
+      </div>
+      <div class="skill-group pop">
+        <h3>Data Science &amp; ML</h3>
+        <ul><li>Data Analysis</li><li>Data Cleaning</li><li>Machine Learning</li><li>Research &amp; Report Writing</li></ul>
+      </div>
+      <div class="skill-group pop">
+        <h3>Libraries &amp; Frameworks</h3>
+        <ul><li>Pandas</li><li>NumPy</li><li>Matplotlib</li><li>Scikit-learn</li><li>Streamlit</li></ul>
+      </div>
+      <div class="skill-group pop">
+        <h3>Data Visualization</h3>
+        <ul><li>Power BI</li><li>Microsoft Excel</li></ul>
+      </div>
+      <div class="skill-group pop">
+        <h3>Networking &amp; Cybersecurity</h3>
+        <ul><li>Cisco Packet Tracer</li><li>Network Configuration</li><li>Routing &amp; Switching</li><li>IP Addressing</li></ul>
+      </div>
+      <div class="skill-group pop">
+        <h3>Tools</h3>
+        <ul><li>Jupyter Notebook</li><li>Visual Studio Code</li><li>Google Colab</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="certificates">
+  <div class="wrap reveal">
+    <h2 class="sectitle">Certificates &amp; Workshops</h2>
+    <div class="cert-grid">
+      <div class="cert-card pop">
+        <h3>AI Chatbot Workshop</h3>
+        <p>Participated in a workshop on AI chatbot concepts, applications, and emerging AI technologies — organized by GDGoC MMU and Telekom Malaysia AEVA.</p>
+      </div>
+      <div class="cert-card pop">
+        <h3>HackPrep: Digital Forensics 101</h3>
+        <p>Participated in a workshop covering digital forensics fundamentals, cybersecurity concepts, and introductory digital investigation techniques.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap reveal">
+    <h2 class="sectitle">Get in Touch</h2>
+    <p>Open to Data Science internship opportunities from 26 July 2026 to 18 October 2026. Feel free to reach out.</p>
+    <div class="footer-links">
+      <a href="mailto:rayankayathri1m@gmail.com">✉️ Email</a>
+      <a href="https://linkedin.com/in/kayathri-k-subrayan-495709297" target="_blank" rel="noopener">🔗 LinkedIn</a>
+      <a href="tel:+601151399786">📞 Call</a>
+    </div>
+    <div class="copyright">© 2026 Kayathri K. Subrayan · Built for the internship search</div>
+  </div>
+</footer>
+
+<script>
+  // Cursor spotlight
+  document.addEventListener('mousemove', (e) => {
+    document.getElementById('spotlight').style.setProperty('--x', e.clientX + 'px');
+    document.getElementById('spotlight').style.setProperty('--y', e.clientY + 'px');
+  });
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+
+  // Pop-in for individual cards as you scroll
+  const popEls = document.querySelectorAll('.pop');
+  const popIo = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        popIo.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  popEls.forEach(el => popIo.observe(el));
+
+  // 3D tilt on project cards
+  document.querySelectorAll('.tilt').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const r = card.getBoundingClientRect();
+      const x = e.clientX - r.left;
+      const y = e.clientY - r.top;
+      const rx = ((y / r.height) - 0.5) * -8;
+      const ry = ((x / r.width) - 0.5) * 8;
+      card.style.transform = `perspective(700px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(700px) rotateX(0) rotateY(0) translateY(0)';
+    });
+  });
+</script>
+
+</body>
+</html>
